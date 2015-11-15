@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace AppLauncher
 {
-    public class ButtonData
+    public struct AppButtonData
     {
         private string _name;
         private string _path;
+        private string _workingPath;
         private string _parameters;
 
         #region Get/Set
@@ -39,6 +40,19 @@ namespace AppLauncher
             }
         }
 
+        public string WorkingPath
+        {
+            get
+            {
+                return _workingPath;
+            }
+
+            set
+            {
+                _workingPath = value;
+            }
+        }
+
         public string Parameters
         {
             get
@@ -53,18 +67,12 @@ namespace AppLauncher
         }
         #endregion
 
-        public ButtonData()
+        public AppButtonData(string name,string path,string workingPath,string parameters)
         {
-            _name = "WinSCP";
-            _path = @"D:\Tools\Winscp\WinSCP.exe";
-            _parameters = "";
-        }
-
-        public ButtonData(string name,string path, string parameters = "")
-        {
-            _name = "WinSCP";
-            _path = @"D:\Tools\Winscp\WinSCP.exe";
-            _parameters = "";
+            _name = name;
+            _path = path;
+            _workingPath = workingPath;
+            _parameters = parameters;
         }
     }
 }

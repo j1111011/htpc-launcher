@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Configuration;
 
 namespace AppLauncher
 {
@@ -22,7 +11,7 @@ namespace AppLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<ButtonData> _buttons = new List<ButtonData>();
+        List<AppButton> _buttons = new List<AppButton>();
 
         private DispatcherTimer _mouseMoveTimer;
 
@@ -37,7 +26,7 @@ namespace AppLauncher
 
             for (int i = 0; i < 5; i++)
             {
-                _buttons.Add(new ButtonData()); 
+                _buttons.Add(new AppButton()); 
             }
 
 
@@ -75,26 +64,13 @@ namespace AppLauncher
         private void UpdateAppButtons()
         {
             Grid_MainButtons.Children.Clear();
-
+             
             foreach(var b in _buttons)
             {
-                Button newBtn = new Button();
-                newBtn.Content = b.Name;
-                newBtn.PreviewKeyDown += ButtonPreviewKeyDown;
+                AppButton newBtn = new AppButton();
+                newBtn.Content = "Button";
                 Grid_MainButtons.Children.Add(newBtn);
             }
-        }
-
-        private void ButtonPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            Button button = sender as Button;
-
-            if (e.Key == Key.Up)
-            {
-
-              //  e.Handled = true;
-            }
-
         }
 
         #region HeaderButtonActions
