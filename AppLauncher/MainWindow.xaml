@@ -9,7 +9,7 @@
         WindowStyle="None" ResizeMode="NoResize"  
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800
-        " MouseMove="WindowOnMouseMove">
+        " MouseMove="WindowOnMouseMove" Loaded="WindowOnLoaded">
     <!-- RESOURCES -->
     <Window.Resources>
         <Style x:Key="FocusVisual">
@@ -72,21 +72,41 @@
             </Setter>
         </Style>
     </Window.Resources>
+    
     <!-- WINDOWS -->
-    <StackPanel MouseMove="WindowOnMouseMove">
-        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
-            <Button x:Name="Button_Exit" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonExitOnClick">X</Button>
-            <Button x:Name="Button_Config" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}">Config</Button>
-        </StackPanel>
-        <UniformGrid Margin="50" HorizontalAlignment="Right" Width="700">
-            <Button Padding="10" Margin="10">
-                <Label Background="Red">holi</Label>
-            </Button>
-            <Button Padding="10" Margin="10">App 1</Button>
-            <Button Padding="10" Margin="10">App 1</Button>
-            <Button Padding="10" Margin="10">App 1</Button>
-            <Button Padding="10" Margin="10">App 1</Button>
-            <Button Padding="10" Margin="10">App 1</Button>
-        </UniformGrid>
+
+    <StackPanel>
+        <Grid x:Name="Grid_Header" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" FlowDirection="RightToLeft" >
+                <Button HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonBackOnClick"> F </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <Button x:Name="Button_Exit" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonExitOnClick">X</Button>
+                <Button x:Name="Button_Config" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonConfigOnClick">Config</Button>
+            </StackPanel>
+        </Grid>
+        <TabControl x:Name="TabControl_Main" Margin="50" Padding="0">
+            <TabItem x:Name="TabItem_Main" Visibility="Collapsed" >
+                <UniformGrid x:Name="Grid_MainButtons" >
+                    <Button Padding="10" Margin="10">
+                        <Label Background="Red">holisd</Label>
+                    </Button>
+                </UniformGrid>
+            </TabItem>
+            <!-- 
+            <TabItem x:Name="TabItem_Config" Visibility="Collapsed">
+            <Grid>
+                <Button Padding="10" Margin="10">
+                    <Label Background="Red">BUTTON</Label>
+                </Button>
+            </Grid>
+            </TabItem>-->
+        </TabControl>
+   
     </StackPanel>
 </Window>
