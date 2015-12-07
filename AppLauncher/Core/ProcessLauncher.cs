@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace AppLauncher
+namespace AppLauncher.Core
 {
     public class ProcessLauncher
     {

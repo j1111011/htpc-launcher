@@ -1,8 +1,14 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+
+using AppLauncher.Core;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace AppLauncher
 {
@@ -19,18 +25,17 @@ namespace AppLauncher
         {
             InitializeComponent();
 
-            Mouse.OverrideCursor = Cursors.None;
-            _mouseMoveTimer = new DispatcherTimer();
-            _mouseMoveTimer.Tick += new EventHandler(MouseMoveTimerTick);
-            RestartMouseTimer();
+            SetupApplication();
 
+            /// Remove later
             for (int i = 0; i < 5; i++)
             {
-                _buttons.Add(new AppButton()); 
+                _buttons.Add(new AppButton());
             }
 
 
             UpdateAppButtons();
+           
         }
 
         /// <summary>
@@ -57,7 +62,23 @@ namespace AppLauncher
         {
             Mouse.OverrideCursor = Cursors.None;
         }
-        
+
+        /// <summary>
+        /// Function that setup the initial state of the window
+        /// </summary>
+        private void SetupApplication()
+        {
+            Mouse.OverrideCursor = Cursors.None;
+            _mouseMoveTimer = new DispatcherTimer();
+            _mouseMoveTimer.Tick += new EventHandler(MouseMoveTimerTick);
+            RestartMouseTimer();
+
+            if (File.Exists(Configuration.Instance.BackgroundImagePath))
+            {
+                Image_Background.Source = new BitmapImage(new Uri(Configuration.Instance.BackgroundImagePath));
+            }
+        }
+
         /// <summary>
         /// Function that updates all the main app buttons.
         /// </summary>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace AppLauncher
+namespace AppLauncher.Core
 {
     public class AppButton : Button
     {
