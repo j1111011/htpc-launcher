@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,10 +21,22 @@ namespace AppLauncher.Core
                 {
                     _instance = new Configuration();
                 }
+
                 return _instance;
             }
         }
         #endregion
+
+        private const string ConfigurationFileName = "configuration.cfg";
+        private string _configurationPath = null;
+
+        private string _backgroundImagePath = null;
+
+        private List<AppButtonData> _appButtons = new List<AppButtonData>();
+
+
+        public event Action OnDataSaved;
+        public event Action OnDataLoaded;
 
         #region Get/set
         public string BackgroundImagePath
@@ -38,16 +51,59 @@ namespace AppLauncher.Core
                 _backgroundImagePath = value;
             }
         }
-        #endregion
 
-        string _backgroundImagePath = null;
+        public List<AppButtonData> AppButtons
+        {
+            get
+            {
+                return _appButtons;
+            }
+
+            set
+            {
+                _appButtons = value;
+            }
+        }
+        #endregion
 
         private Configuration()
         {
+            _configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
             //Load config:
-            if(_backgroundImagePath == null)
+            if (_backgroundImagePath == null)
             {
                 _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
+            }
+        }
+  
+        public void SaveConfiguration()
+        {
+            string output = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(_configurationPath, output);
+
+            if(OnDataSaved != null)
+            {
+                OnDataSaved();
+            }
+        }
+
+        public void LoadConfiguration()
+        {
+            if (File.Exists(_configurationPath))
+            {
+                string input = File.ReadAllText(_configurationPath);
+                try
+                {
+                    _instance = JsonConvert.DeserializeObject<Configuration>(input);
+                    if (OnDataLoaded != null)
+                    {
+                        OnDataLoaded();
+                    }
+                }
+                catch(JsonException e)
+                {
+                    SaveConfiguration();
+                }
             }
         }
     }

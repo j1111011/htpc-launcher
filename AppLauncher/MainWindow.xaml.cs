@@ -25,8 +25,6 @@ namespace AppLauncher
 
         private EAppPage _currentAppPage = EAppPage.Main;
 
-        List<AppButton> _buttons = new List<AppButton>();
-
         private DispatcherTimer _mouseMoveTimer;
 
         public MainWindow()
@@ -34,13 +32,6 @@ namespace AppLauncher
             InitializeComponent();
 
             SetupApplication();
-
-            /// Remove later
-            for (int i = 0; i < 5; i++)
-            {
-                _buttons.Add(new AppButton());
-            }
-
 
             UpdateAppButtons();
            
@@ -81,13 +72,26 @@ namespace AppLauncher
             _mouseMoveTimer.Tick += new EventHandler(MouseMoveTimerTick);
             RestartMouseTimer();
 
+            Configuration.Instance.OnDataLoaded += OnDataLoaded;
+
+            Configuration.Instance.LoadConfiguration();
+
             if (File.Exists(Configuration.Instance.BackgroundImagePath))
             {
                 Image_Background.Source = new BitmapImage(new Uri(Configuration.Instance.BackgroundImagePath));
             }
 
             ConfigPageButtons();
+        }
 
+        private void OnDataLoaded()
+        {
+            if(Configuration.Instance.AppButtons.Count == 0)
+            {
+                Configuration.Instance.AppButtons.Add(new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "", ""));
+            }
+            UpdateAppButtons();
+            Configuration.Instance.SaveConfiguration();
         }
 
         /// <summary>
@@ -97,20 +101,21 @@ namespace AppLauncher
         {
             Grid_MainButtons.Children.Clear();
              
-            foreach(var b in _buttons)
+            foreach(var data in Configuration.Instance.AppButtons)
             {
-                AppButton newBtn = new AppButton();
-                newBtn.Content = "Button";
+                AppButton newBtn = new AppButton(data);
                 Grid_MainButtons.Children.Add(newBtn);
             }
 
-            Grid_MainButtons.Columns = Math.Min(_buttons.Count, 6);
-            Grid_MainButtons.Rows    = Math.Min(_buttons.Count, _buttons.Count/6);
+            Grid_MainButtons.Columns = Math.Min(Configuration.Instance.AppButtons.Count, 6);
+            Grid_MainButtons.Rows    = Math.Min(Configuration.Instance.AppButtons.Count, Configuration.Instance.AppButtons.Count/6);
+
+
         }
 
         private void EnterConfiguration()
         {
-           // this.Stack_PageConfig.Visibility = Visibility.Visible;
+            // this.Stack_PageConfig.Visibility = Visibility.Visible;
             this.Grid_PageMain.Visibility = Visibility.Hidden;
             _currentAppPage = EAppPage.Configuration;
 

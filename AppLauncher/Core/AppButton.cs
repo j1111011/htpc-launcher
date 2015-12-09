@@ -30,7 +30,7 @@ namespace AppLauncher.Core
 
         public AppButton()
         {
-            _data = new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "");
+            _data = new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "","");
             RegisterEvents();
         }
 

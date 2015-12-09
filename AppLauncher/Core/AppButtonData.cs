@@ -12,6 +12,7 @@ namespace AppLauncher.Core
         private string _path;
         private string _workingPath;
         private string _parameters;
+        private string _iconPath;
 
         #region Get/Set
         public string Name
@@ -65,14 +66,28 @@ namespace AppLauncher.Core
                 _parameters = value;
             }
         }
+
+        public string IconPath
+        {
+            get
+            {
+                return _iconPath;
+            }
+
+            set
+            {
+                _iconPath = value;
+            }
+        }
         #endregion
 
-        public AppButtonData(string name,string path,string workingPath,string parameters)
+        public AppButtonData(string name,string path,string workingPath,string parameters,string iconPath)
         {
-            _name = name;
-            _path = path;
-            _workingPath = workingPath;
-            _parameters = parameters;
+            _name           = name;
+            _path           = path;
+            _workingPath    = workingPath;
+            _parameters     = parameters;
+            _iconPath       = iconPath;
         }
     }
 }

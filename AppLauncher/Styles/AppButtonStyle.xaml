@@ -22,7 +22,7 @@
                     </ControlTemplate.Resources>
                     <!-- Control Template -->
 
-                    <Grid Background="LightBlue">
+                    <Grid Background="LightBlue" Margin="5">
                         <Grid Name="InnerBorder" Background="LightCoral" Margin="20">
                             <Rectangle Width="75" Height="75">
                             </Rectangle>
