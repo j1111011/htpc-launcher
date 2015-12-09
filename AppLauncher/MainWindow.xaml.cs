@@ -12,11 +12,19 @@ using System.IO;
 
 namespace AppLauncher
 {
+    public enum EAppPage
+    {
+        Main,
+        Configuration
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private EAppPage _currentAppPage = EAppPage.Main;
+
         List<AppButton> _buttons = new List<AppButton>();
 
         private DispatcherTimer _mouseMoveTimer;
@@ -77,6 +85,9 @@ namespace AppLauncher
             {
                 Image_Background.Source = new BitmapImage(new Uri(Configuration.Instance.BackgroundImagePath));
             }
+
+            ConfigPageButtons();
+
         }
 
         /// <summary>
@@ -92,6 +103,43 @@ namespace AppLauncher
                 newBtn.Content = "Button";
                 Grid_MainButtons.Children.Add(newBtn);
             }
+
+            Grid_MainButtons.Columns = Math.Min(_buttons.Count, 6);
+            Grid_MainButtons.Rows    = Math.Min(_buttons.Count, _buttons.Count/6);
+        }
+
+        private void EnterConfiguration()
+        {
+           // this.Stack_PageConfig.Visibility = Visibility.Visible;
+            this.Grid_PageMain.Visibility = Visibility.Hidden;
+            _currentAppPage = EAppPage.Configuration;
+
+            ConfigPageButtons();
+        }
+
+        private void LeaveConfiguration()
+        {
+           // this.Stack_PageConfig.Visibility = Visibility.Hidden;
+            this.Grid_PageMain.Visibility = Visibility.Visible;
+
+            _currentAppPage = EAppPage.Main;
+
+            ConfigPageButtons();
+        }
+
+        private void ConfigPageButtons()
+        {
+            switch(_currentAppPage)
+            {
+                case EAppPage.Main:
+                    Button_Back.Visibility = Visibility.Hidden;
+                    Button_Config.Visibility = Visibility.Visible;
+                    break;
+                case EAppPage.Configuration:
+                    Button_Back.Visibility = Visibility.Visible;
+                    Button_Config.Visibility = Visibility.Hidden;
+                    break;
+            }
         }
 
         #region HeaderButtonActions
@@ -103,12 +151,12 @@ namespace AppLauncher
 
         private void ButtonConfigOnClick(object sender, RoutedEventArgs e)
         {
-          //  TabControl_Main.SelectedItem = TabItem_Config;
+            EnterConfiguration();
         }
 
         private void ButtonBackOnClick(object sender, RoutedEventArgs e)
         {
-            //TabControl_Main.SelectedItem = TabItem_Main;
+            LeaveConfiguration();
         }
 
         private void WindowOnMouseMove(object sender, MouseEventArgs e)

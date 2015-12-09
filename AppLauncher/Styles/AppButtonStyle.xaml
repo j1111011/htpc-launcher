@@ -67,7 +67,7 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0:0:0.800" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Margin" To="20" />
+                                        <ThicknessAnimation Duration="0:0:0.300" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Margin" To="20" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>

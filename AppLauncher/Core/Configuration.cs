@@ -47,7 +47,7 @@ namespace AppLauncher.Core
             //Load config:
             if(_backgroundImagePath == null)
             {
-                _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall.jpg");
+                _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
             }
         }
     }

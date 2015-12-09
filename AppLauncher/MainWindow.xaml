@@ -76,31 +76,34 @@
     <!-- WINDOWS -->
     <Grid>
         <Image Name="Image_Background" Stretch="UniformToFill"/>
-        <StackPanel>
-            <Grid x:Name="Grid_Header" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_Header">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" FlowDirection="RightToLeft" >
-                    <Button HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonBackOnClick"> F </Button>
+                    <Button x:Name="Button_Back" Visibility="Hidden" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonBackOnClick"> F </Button>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button x:Name="Button_Exit" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonExitOnClick">X</Button>
                     <Button x:Name="Button_Config" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonConfigOnClick">Config</Button>
                 </StackPanel>
             </Grid>
-            <TabControl x:Name="TabControl_Main" Margin="50" Padding="0">
-                <TabItem x:Name="TabItem_Main" Visibility="Collapsed" >
-                    <UniformGrid x:Name="Grid_MainButtons" >
-                        <Button Padding="10" Margin="10">
-                            <Label Background="Red">holisd</Label>
-                        </Button>
-                    </UniformGrid>
-                </TabItem>
-            </TabControl>
+            <Grid x:Name="TabControl_Main" Margin="60,10,60,60" Grid.Row="1" Background="Transparent">
+                <!-- Main Page-->
+                <Grid x:Name="Grid_PageMain" >
+                    <UniformGrid x:Name="Grid_MainButtons" Rows="1" Columns="1"/>
+                </Grid>
+                
+                <!-- Config Page-->
+            </Grid>
    
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>
