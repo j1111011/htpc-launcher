@@ -88,7 +88,7 @@
     <Window.InputBindings>
         <KeyBinding Key="Enter" Modifiers="Alt" Command="{StaticResource ToggleFullscreen}" />
     </Window.InputBindings>
-        
+
     <!-- WINDOWS -->
     <Grid>
         <Image Name="Image_Background" Stretch="UniformToFill"/>
@@ -98,6 +98,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid x:Name="Grid_Header">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
@@ -107,8 +108,9 @@
                     <Button x:Name="Button_Back" Visibility="Hidden" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonBackOnClick"> F </Button>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button x:Name="Button_Exit" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonExitOnClick">X</Button>
+                    <Button x:Name="Button_Exit" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonExitOnClick" ></Button>
                     <Button x:Name="Button_Config" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonConfigOnClick">Config</Button>
+                    <Button x:Name="Button_Fullscreen" HorizontalAlignment="Left" Padding="10" Margin="5" Style="{DynamicResource MenuBarButton}" Click="ButtonFullscreenOnClick" >Fullscreen</Button>
                 </StackPanel>
             </Grid>
             <Grid x:Name="TabControl_Main" Margin="60,10,60,60" Grid.Row="1" Background="Transparent">
@@ -118,6 +120,17 @@
                 </Grid>
                 
                 <!-- Config Page-->
+                
+                
+                <!-- Exit Page-->
+                <Grid x:Name="Grid_PageExit" Visibility="Hidden">
+                    <UniformGrid Background="Red" Rows="1" Columns="4" Grid.Row="1" Width="600" Height="250">
+                        <Button Content="Return" />
+                        <Button Content="Exit" />
+                        <Button Content="Sleep" />
+                        <Button Content="Shutdown" />
+                    </UniformGrid>
+                </Grid>
             </Grid>
    
         </Grid>

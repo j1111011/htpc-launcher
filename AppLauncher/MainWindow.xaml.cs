@@ -15,7 +15,8 @@ namespace AppLauncher
     public enum EAppPage
     {
         Main,
-        Configuration
+        Configuration,
+        Exit
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -90,6 +91,9 @@ namespace AppLauncher
             {
                 Configuration.Instance.AppButtons.Add(new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "", ""));
             }
+
+            SetFullscreen(Configuration.Instance.Fullscreen);
+
             UpdateAppButtons();
             Configuration.Instance.SaveConfiguration();
         }
@@ -122,27 +126,56 @@ namespace AppLauncher
             ConfigPageButtons();
         }
 
+
+
         private void LeaveConfiguration()
         {
            // this.Stack_PageConfig.Visibility = Visibility.Hidden;
             this.Grid_PageMain.Visibility = Visibility.Visible;
+            this.Grid_PageExit.Visibility = Visibility.Hidden;
 
             _currentAppPage = EAppPage.Main;
 
             ConfigPageButtons();
         }
 
+        private void EnterExitPage()
+        {
+            // this.Stack_PageConfig.Visibility = Visibility.Visible;
+            this.Grid_Header.IsEnabled = false;
+            this.Grid_PageMain.Visibility = Visibility.Hidden;
+            this.Grid_PageExit.Visibility = Visibility.Visible;
+            _currentAppPage = EAppPage.Exit;
+
+            ConfigPageButtons();
+        }
+        private void LeaveExitPage()
+        {
+            this.Grid_Header.IsEnabled = true;
+            // this.Stack_PageConfig.Visibility = Visibility.Visible;
+            this.Grid_PageMain.Visibility = Visibility.Visible;
+            this.Grid_PageExit.Visibility = Visibility.Hidden;
+
+            _currentAppPage = EAppPage.Main;
+
+            ConfigPageButtons();
+        }
         private void ConfigPageButtons()
         {
             switch(_currentAppPage)
             {
                 case EAppPage.Main:
                     Button_Back.Visibility = Visibility.Hidden;
-                    Button_Config.Visibility = Visibility.Visible;
+                    Button_Config.Visibility     = Visibility.Visible;
+                    Button_Fullscreen.Visibility = Visibility.Visible;
+
                     break;
                 case EAppPage.Configuration:
                     Button_Back.Visibility = Visibility.Visible;
                     Button_Config.Visibility = Visibility.Hidden;
+                    Button_Fullscreen.Visibility = Visibility.Hidden;
+                    break;
+               case EAppPage.Exit:
                     break;
             }
         }
@@ -167,9 +200,26 @@ namespace AppLauncher
 
         private void ButtonExitOnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if(  _currentAppPage != EAppPage.Exit)
+            {
+                EnterExitPage();
+            }
+            else
+            {
+                LeaveExitPage();
+            }
+            
+           // this.Close();
         }
 
+        private void ButtonFullscreenOnClick(object sender, RoutedEventArgs e)
+        {
+            Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
+            Configuration.Instance.SaveConfiguration();
+
+            SetFullscreen(Configuration.Instance.Fullscreen);
+        }
+ 
         private void ButtonConfigOnClick(object sender, RoutedEventArgs e)
         {
             EnterConfiguration();
@@ -186,8 +236,6 @@ namespace AppLauncher
             RestartMouseTimer();
         }
 
-        #endregion
-
         public void ToggleFullscreen(Object sender, ExecutedRoutedEventArgs e)
         {
             Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
@@ -195,5 +243,7 @@ namespace AppLauncher
 
             SetFullscreen(Configuration.Instance.Fullscreen);
         }
+
+        #endregion
     }
 }
