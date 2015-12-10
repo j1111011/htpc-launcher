@@ -29,9 +29,9 @@ namespace AppLauncher.Core
 
         private const string ConfigurationFileName = "configuration.cfg";
         private string _configurationPath = null;
-
+ 
         private string _backgroundImagePath = null;
-
+        private bool   _fullscreen = false;
         private List<AppButtonData> _appButtons = new List<AppButtonData>();
 
 
@@ -62,6 +62,19 @@ namespace AppLauncher.Core
             set
             {
                 _appButtons = value;
+            }
+        }
+
+        public bool Fullscreen
+        {
+            get
+            {
+                return _fullscreen;
+            }
+
+            set
+            {
+                _fullscreen = value;
             }
         }
         #endregion

@@ -147,6 +147,22 @@ namespace AppLauncher
             }
         }
 
+        private void SetFullscreen(bool fullscreen)
+        {
+            if(fullscreen)
+            {
+                this.WindowStyle = WindowStyle.None;
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+            }
+        }
+
         #region HeaderButtonActions
 
         private void ButtonExitOnClick(object sender, RoutedEventArgs e)
@@ -172,9 +188,12 @@ namespace AppLauncher
 
         #endregion
 
-        private void WindowOnLoaded(object sender, RoutedEventArgs e)
+        public void ToggleFullscreen(Object sender, ExecutedRoutedEventArgs e)
         {
-            Keyboard.Focus(Button_Exit);
+            Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
+            Configuration.Instance.SaveConfiguration();
+
+            SetFullscreen(Configuration.Instance.Fullscreen);
         }
     }
 }

@@ -6,12 +6,17 @@
         xmlns:local="clr-namespace:AppLauncher"
         mc:Ignorable="d"
         Title="MainWindow" 
-        WindowStyle="None" 
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800" 
-        MouseMove="WindowOnMouseMove" Loaded="WindowOnLoaded">
+        MouseMove="WindowOnMouseMove">
+    
+
     <!-- RESOURCES -->
     <Window.Resources>
+        
+         <!-- COMANDS -->
+        <RoutedUICommand x:Key="ToggleFullscreen" Text="Toggle Fullscreen" />
+
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -73,6 +78,17 @@
         </Style>
     </Window.Resources>
     
+    
+    <!-- COMMANDS BINDINGS-->
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource ToggleFullscreen}" Executed="ToggleFullscreen" />
+    </Window.CommandBindings>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Modifiers="Alt" Command="{StaticResource ToggleFullscreen}" />
+    </Window.InputBindings>
+        
     <!-- WINDOWS -->
     <Grid>
         <Image Name="Image_Background" Stretch="UniformToFill"/>
