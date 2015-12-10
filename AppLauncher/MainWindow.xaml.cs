@@ -15,7 +15,6 @@ namespace AppLauncher
     public enum EAppPage
     {
         Main,
-        Configuration,
         Exit
     }
     /// <summary>
@@ -117,42 +116,18 @@ namespace AppLauncher
 
         }
 
-        private void EnterConfiguration()
-        {
-            // this.Stack_PageConfig.Visibility = Visibility.Visible;
-            this.Grid_PageMain.Visibility = Visibility.Hidden;
-            _currentAppPage = EAppPage.Configuration;
-
-            ConfigPageButtons();
-        }
-
-
-
-        private void LeaveConfiguration()
-        {
-           // this.Stack_PageConfig.Visibility = Visibility.Hidden;
-            this.Grid_PageMain.Visibility = Visibility.Visible;
-            this.Grid_PageExit.Visibility = Visibility.Hidden;
-
-            _currentAppPage = EAppPage.Main;
-
-            ConfigPageButtons();
-        }
-
         private void EnterExitPage()
         {
             // this.Stack_PageConfig.Visibility = Visibility.Visible;
-            this.Grid_Header.IsEnabled = false;
             this.Grid_PageMain.Visibility = Visibility.Hidden;
             this.Grid_PageExit.Visibility = Visibility.Visible;
             _currentAppPage = EAppPage.Exit;
 
             ConfigPageButtons();
         }
+
         private void LeaveExitPage()
         {
-            this.Grid_Header.IsEnabled = true;
-            // this.Stack_PageConfig.Visibility = Visibility.Visible;
             this.Grid_PageMain.Visibility = Visibility.Visible;
             this.Grid_PageExit.Visibility = Visibility.Hidden;
 
@@ -165,15 +140,6 @@ namespace AppLauncher
             switch(_currentAppPage)
             {
                 case EAppPage.Main:
-                    Button_Back.Visibility = Visibility.Hidden;
-                    Button_Config.Visibility     = Visibility.Visible;
-                    Button_Fullscreen.Visibility = Visibility.Visible;
-
-                    break;
-                case EAppPage.Configuration:
-                    Button_Back.Visibility = Visibility.Visible;
-                    Button_Config.Visibility = Visibility.Hidden;
-                    Button_Fullscreen.Visibility = Visibility.Hidden;
                     break;
                case EAppPage.Exit:
                     break;
@@ -220,16 +186,6 @@ namespace AppLauncher
             SetFullscreen(Configuration.Instance.Fullscreen);
         }
  
-        private void ButtonConfigOnClick(object sender, RoutedEventArgs e)
-        {
-            EnterConfiguration();
-        }
-
-        private void ButtonBackOnClick(object sender, RoutedEventArgs e)
-        {
-            LeaveConfiguration();
-        }
-
         private void WindowOnMouseMove(object sender, MouseEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
@@ -242,6 +198,28 @@ namespace AppLauncher
             Configuration.Instance.SaveConfiguration();
 
             SetFullscreen(Configuration.Instance.Fullscreen);
+        }
+
+        private void ButtonExitCloseClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ButtonExitSleepClick(object sender, RoutedEventArgs e)
+        {
+            LeaveExitPage();
+            AppController.Sleep();
+        }
+
+        private void ButtonExitReturnClick(object sender, RoutedEventArgs e)
+        {
+            LeaveExitPage();
+        }
+
+        private void ButtonExitShutdownClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+            AppController.Shutdown();
         }
 
         #endregion

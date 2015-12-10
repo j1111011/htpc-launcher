@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace AppLauncher.Core
 {
@@ -11,6 +12,7 @@ namespace AppLauncher.Core
     {
         private AppButtonData _data;
 
+        private Image _mainImage;
 
         #region Get/Set
 
@@ -28,15 +30,16 @@ namespace AppLauncher.Core
         }
         #endregion
 
-        public AppButton()
-        {
-            _data = new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "","");
-            RegisterEvents();
-        }
-
+ 
         public AppButton(AppButtonData buttonData)
         {
             _data = buttonData;
+
+            if (String.IsNullOrEmpty(_data.IconPath))
+            {
+                _data.IconPath = "pack://application:,,,/Images/Icon.png";
+            }
+
             RegisterEvents();
         }
 
@@ -48,6 +51,14 @@ namespace AppLauncher.Core
         private void OnClick(object sender, System.Windows.RoutedEventArgs e)
         {
             ProcessLauncher.Instance.Launch(_data.Path,_data.WorkingPath,_data.Parameters);
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _mainImage = (Image)Template.FindName("Image_Main", this);
+            _mainImage.Source = new BitmapImage(new Uri(_data.IconPath));
         }
     }
 }

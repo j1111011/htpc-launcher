@@ -13,5 +13,13 @@ namespace AppLauncher
     /// </summary>
     public partial class App : Application
     {
+       /* protected override void OnStartup(StartupEventArgs e)
+        {
+            AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
+        }
+        private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e.ExceptionObject);
+        }*/
     }
 }

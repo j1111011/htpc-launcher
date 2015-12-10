@@ -3,13 +3,8 @@
                     xmlns:local="clr-namespace:AppLauncher.App.Styles"
                     xmlns:my="clr-namespace:AppLauncher.Core">
 
-    <Storyboard x:Key="MouseDownTimeLine" >
-        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Button.Opacity" >
-            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1" />
-        </DoubleAnimationUsingKeyFrames> -->
-    </Storyboard>
-
-    <Style x:Key="AppButtonStyle" TargetType="my:AppButton">
+    
+    <Style TargetType="my:AppButton">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -24,12 +19,11 @@
 
                     <Grid Background="Transparent" Margin="5">
                       
-                        <Grid Name="InnerBorder" Background="LightCoral" Margin="20">
+                        <Grid Name="InnerBorder" Background="Transparent" Margin="20">
                             <Grid.BitmapEffect>
                                 <DropShadowBitmapEffect Color="Black" Direction="320" ShadowDepth="15" Softness="1" Opacity="0.25"/>
                             </Grid.BitmapEffect>
-                            <Rectangle Width="75" Height="75">
-                            </Rectangle>
+                            <Image x:Name="Image_Main"></Image>
                         </Grid>
                     </Grid>
   
@@ -82,6 +76,4 @@
          </Setter>
     </Style>
 
-    <Style TargetType="my:AppButton" BasedOn="{StaticResource AppButtonStyle}" />
-    
 </ResourceDictionary>
