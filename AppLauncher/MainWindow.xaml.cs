@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using AppLauncher.Core;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Controls;
 
 namespace AppLauncher
 {
@@ -26,6 +27,8 @@ namespace AppLauncher
         private EAppPage _currentAppPage = EAppPage.Main;
 
         private DispatcherTimer _mouseMoveTimer;
+
+        private List<AppButton> _activeButtonList = new List<AppButton>();
 
         public MainWindow()
         {
@@ -102,18 +105,30 @@ namespace AppLauncher
         /// </summary>
         private void UpdateAppButtons()
         {
+            _activeButtonList.Clear();
             Grid_MainButtons.Children.Clear();
              
             foreach(var data in Configuration.Instance.AppButtons)
             {
                 AppButton newBtn = new AppButton(data);
                 Grid_MainButtons.Children.Add(newBtn);
+                _activeButtonList.Add(newBtn);
             }
 
             Grid_MainButtons.Columns = Math.Min(Configuration.Instance.AppButtons.Count, 6);
             Grid_MainButtons.Rows    = Math.Min(Configuration.Instance.AppButtons.Count, Configuration.Instance.AppButtons.Count/6);
 
-
+            FocusOnAppButtons();
+        }
+        private void FocusOnAppButtons()
+        {
+            if (_activeButtonList.Count > 0)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(delegate ()
+                {
+                    Keyboard.Focus(_activeButtonList[0]);
+                }));
+            }
         }
 
         private void EnterExitPage()
@@ -124,6 +139,9 @@ namespace AppLauncher
             _currentAppPage = EAppPage.Exit;
 
             ConfigPageButtons();
+
+            Keyboard.Focus(Button_Return);
+
         }
 
         private void LeaveExitPage()
@@ -134,6 +152,8 @@ namespace AppLauncher
             _currentAppPage = EAppPage.Main;
 
             ConfigPageButtons();
+
+            FocusOnAppButtons();
         }
         private void ConfigPageButtons()
         {
@@ -223,5 +243,15 @@ namespace AppLauncher
         }
 
         #endregion
+
+        private void ExitbuttonsIsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if(((bool)e.NewValue) == true)
+            {
+                Text_ExitMain.Text = (string)button.Tag;
+            }
+        }
     }
 }

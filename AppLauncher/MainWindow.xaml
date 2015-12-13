@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppLauncher"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="App Launcher" 
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800" 
         MouseMove="WindowOnMouseMove">
@@ -13,10 +13,8 @@
 
     <!-- RESOURCES -->
     <Window.Resources>
-       
-         <!-- COMANDS -->
+        <!-- COMANDS -->
         <RoutedUICommand x:Key="ToggleFullscreen" Text="Toggle Fullscreen" />
-     
     </Window.Resources>
     
     
@@ -35,16 +33,16 @@
         <Image Name="Image_Background" Stretch="UniformToFill"/>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="Grid_Header">
+            <Grid x:Name="Grid_Header" Margin="10">
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Width="50" x:Name="Button_Exit" HorizontalAlignment="Left"  Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitOnClick" >
-                        <BitmapImage UriSource="Images/Icon.png"/>
+                    <Button Width="50" x:Name="Button_Exit" HorizontalAlignment="Left"  Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitOnClick">
+                        <BitmapImage UriSource="Images/Exit.png" />
                     </Button>
-                    <Button Width="50" Name="Button_Fullscreen" HorizontalAlignment="Left" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonFullscreenOnClick" >
-                        <BitmapImage UriSource="Images/Icon.png"/>
+                    <Button Width="50" Name="Button_Fullscreen" HorizontalAlignment="Left" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonFullscreenOnClick">
+                        <BitmapImage UriSource="Images/Fullscreen.png"/>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -57,15 +55,31 @@
 
                 <!-- Exit Page-->
                 <Grid x:Name="Grid_PageExit">
-                    <UniformGrid Background="Red" Rows="1" Columns="4" Grid.Row="1" Width="600" Height="250">
-                        <Button Content="Return"    Click="ButtonExitReturnClick"/>
-                        <Button Content="Exit"      Click="ButtonExitCloseClick"/>
-                        <Button Content="Sleep"     Click="ButtonExitSleepClick"/>
-                        <Button Content="Shutdown"  Click="ButtonExitShutdownClick"/>
-                    </UniformGrid>
+
+                    <Grid MaxWidth="700" MaxHeight="350">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <UniformGrid Rows="1" Columns="4" MaxWidth="700" MaxHeight="350">
+
+                            <Button Tag="Return"  x:Name="Button_Return" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitReturnClick" IsKeyboardFocusedChanged="ExitbuttonsIsKeyboardFocusedChanged">
+                                <BitmapImage UriSource="Images/BackBig.png"/>
+                            </Button>
+                            <Button Tag="Close App Launcher" x:Name="Button_Close" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitCloseClick" IsKeyboardFocusedChanged="ExitbuttonsIsKeyboardFocusedChanged">
+                                <BitmapImage UriSource="Images/ExitBig.png"/>
+                            </Button>
+                            <Button Tag="Sleep Computer" x:Name="Button_Sleep" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitSleepClick" IsKeyboardFocusedChanged="ExitbuttonsIsKeyboardFocusedChanged">
+                                <BitmapImage UriSource="Images/SleepBig.png"/>
+                            </Button>
+                            <Button Tag="Shutdown Computer" x:Name="Button_Shutdown" Style="{DynamicResource HeaderButtonStyle}" Click="ButtonExitShutdownClick" IsKeyboardFocusedChanged="ExitbuttonsIsKeyboardFocusedChanged">
+                                <BitmapImage UriSource="Images/ShutdownBig.png"/>
+                            </Button>
+                        </UniformGrid>
+                        <TextBlock x:Name="Text_ExitMain" HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="White" Grid.Row="1"> TEXT</TextBlock>
+                    </Grid>
                 </Grid>
             </Grid>
-   
         </Grid>
     </Grid>
 </Window>

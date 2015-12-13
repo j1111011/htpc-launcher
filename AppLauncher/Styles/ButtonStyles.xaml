@@ -9,13 +9,62 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <!-- Control Template -->
-                    <Grid Margin="5">
+                    <Grid Name="Grid_Main" Margin="5" RenderTransformOrigin="0.5, 0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform/>
+                        </Grid.RenderTransform>
                         <Grid.BitmapEffect>
                             <DropShadowBitmapEffect Color="Black" Direction="320" ShadowDepth="5" Softness="1" Opacity="0.15"/>
                         </Grid.BitmapEffect>
-                        <Image Source="{TemplateBinding Button.Content}"></Image>
+                        <Image x:Name="Image_Main"  Source="{TemplateBinding Button.Content}" Opacity="0.5"></Image>
                     </Grid>
 
+                    <!-- Control Triggers -->
+                    <ControlTemplate.Triggers>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="False" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="Image_Main" Storyboard.TargetProperty="Opacity" To="0.55"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="Image_Main" Storyboard.TargetProperty="Opacity" To="1"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.1"  />
+                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.1"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.0"  />
+                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.0"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

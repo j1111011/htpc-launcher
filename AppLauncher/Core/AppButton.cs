@@ -13,6 +13,7 @@ namespace AppLauncher.Core
         private AppButtonData _data;
 
         private Image _mainImage;
+        private Image _mainBack;
 
         #region Get/Set
 
@@ -59,6 +60,9 @@ namespace AppLauncher.Core
 
             _mainImage = (Image)Template.FindName("Image_Main", this);
             _mainImage.Source = new BitmapImage(new Uri(_data.IconPath));
+
+            _mainBack = (Image)Template.FindName("Image_Back", this);
+            _mainBack.Source = new BitmapImage(new Uri("pack://application:,,,/Images/Glow.png"));
         }
     }
 }

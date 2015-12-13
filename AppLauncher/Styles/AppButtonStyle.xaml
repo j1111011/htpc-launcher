@@ -24,7 +24,7 @@
                         <Grid.BitmapEffect>
                                 <DropShadowBitmapEffect Color="Black" Direction="320" ShadowDepth="15" Softness="1" Opacity="0.25"/>
                             </Grid.BitmapEffect>
-                        <Image></Image>
+                        <Image x:Name="Image_Back" Opacity="0"></Image>
                         <Grid Margin="5">
                             <Image x:Name="Image_Main"></Image>
                         </Grid>
@@ -33,50 +33,51 @@
                     <!-- Control Triggers -->
                     <ControlTemplate.Triggers>
 
-                        <!-- Mouse Triggers -->
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <EventTrigger.Actions>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="False" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="Image_Back" Storyboard.TargetProperty="Opacity" To="0"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="Image_Back" Storyboard.TargetProperty="Opacity" To="1"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.2"  />
                                         <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.2"  />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <EventTrigger.Actions>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.0"  />
                                         <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.0"  />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        
-                        <!-- Keyboard Triggers -->
-                        <EventTrigger RoutedEvent="GotKeyboardFocus">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.2"  />
-                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.2"  />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="LostKeyboardFocus">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.0"  />
-                                        <DoubleAnimation Duration="0:0:0.35" Storyboard.TargetName="Grid_Main" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.0"  />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

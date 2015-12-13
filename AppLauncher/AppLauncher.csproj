@@ -166,6 +166,23 @@
   <ItemGroup>
     <Resource Include="Images\Icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Glow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Exit.png" />
+    <Resource Include="Images\Fullscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ExitBig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShutdownBig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BackBig.png" />
+    <Resource Include="Images\sleepBig.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
