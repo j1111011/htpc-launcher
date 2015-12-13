@@ -90,11 +90,6 @@ namespace AppLauncher
 
         private void OnDataLoaded()
         {
-            if(Configuration.Instance.AppButtons.Count == 0)
-            {
-                Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button", @"D:\Tools\Winscp\WinSsCP.exe", @"D:\Tools\Wisnscp\", "", ""));
-            }
-
             SetFullscreen(Configuration.Instance.Fullscreen);
 
             UpdateAppButtons();
@@ -111,6 +106,8 @@ namespace AppLauncher
             foreach(var data in Configuration.Instance.AppButtons)
             {
                 AppButton newBtn = new AppButton(data,this);
+                newBtn.OnButtonFocused += OnAppButtonFocused;
+                newBtn.OnButtonUnfocused += OnAppButtonUnfocused;
                 Grid_MainButtons.Children.Add(newBtn);
                 _activeButtonList.Add(newBtn);
             }
@@ -120,6 +117,17 @@ namespace AppLauncher
 
             FocusOnAppButtons();
         }
+
+        private void OnAppButtonUnfocused(AppButton obj)
+        {
+            Text_App.Text = "";
+        }
+
+        private void OnAppButtonFocused(AppButton appButton)
+        {
+            Text_App.Text = appButton.Data.Name;
+        }
+
         private void FocusOnAppButtons()
         {
             if (_activeButtonList.Count > 0)
@@ -198,23 +206,28 @@ namespace AppLauncher
            // this.Close();
         }
 
-        private void ButtonFullscreenOnClick(object sender, RoutedEventArgs e)
-        {
-            Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
-            SetFullscreen(Configuration.Instance.Fullscreen);
-        }
- 
+
         private void WindowOnMouseMove(object sender, MouseEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
             RestartMouseTimer();
         }
 
-        public void ToggleFullscreen(Object sender, ExecutedRoutedEventArgs e)
+        private void ToggleFullscreen()
         {
             Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
-
             SetFullscreen(Configuration.Instance.Fullscreen);
+            FocusOnAppButtons();
+        }
+
+        private void ButtonFullscreenOnClick(object sender, RoutedEventArgs e)
+        {
+            ToggleFullscreen();
+        }
+
+        public void ToggleFullscreen(Object sender, ExecutedRoutedEventArgs e)
+        {
+            ToggleFullscreen();
         }
 
         private void ButtonExitCloseClick(object sender, RoutedEventArgs e)

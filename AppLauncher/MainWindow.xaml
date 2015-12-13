@@ -31,6 +31,7 @@
     <!-- WINDOWS -->
     <Grid>
         <Image Name="Image_Background" Stretch="UniformToFill"/>
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
@@ -47,12 +48,16 @@
                 </StackPanel>
             </Grid>
             <Grid x:Name="TabControl_Main" Margin="60,10,60,60" Grid.Row="1" Background="Transparent">
-                
+
+             
                 <!-- Main Page-->
                 <Grid x:Name="Grid_PageMain" >
                     <UniformGrid x:Name="Grid_MainButtons" Rows="1" Columns="1"/>
+                    <TextBlock x:Name="Text_App" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="White"></TextBlock>
                 </Grid>
 
+       
+                
                 <!-- Exit Page-->
                 <Grid x:Name="Grid_PageExit" Visibility="Hidden">
 
@@ -79,6 +84,16 @@
                         <TextBlock x:Name="Text_ExitMain" HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="White" Grid.Row="1"> TEXT</TextBlock>
                     </Grid>
                 </Grid>
+
+            </Grid>
+        </Grid>
+        <!-- Message -->
+        <Grid x:Name="Grid_Message" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Opacity="0.5" Color="Black"/>
+            </Grid.Background>
+            <Grid Background="White" Width="600" Height="200">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="White"> LOADING</TextBlock>
             </Grid>
         </Grid>
     </Grid>

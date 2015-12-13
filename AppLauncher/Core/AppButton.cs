@@ -15,6 +15,9 @@ namespace AppLauncher.Core
         private Image _mainImage;
         private Image _mainBack;
 
+
+        public event Action<AppButton> OnButtonFocused;
+        public event Action<AppButton> OnButtonUnfocused;
         #region Get/Set
 
         public AppButtonData Data
@@ -48,6 +51,27 @@ namespace AppLauncher.Core
         private void RegisterEvents()
         {
             Click += OnClick;
+
+            IsKeyboardFocusedChanged += KeyboardFocusedChanged;
+        }
+
+        private void KeyboardFocusedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (((bool)e.NewValue) == true)
+            {
+                if(OnButtonFocused!=null)
+                {
+                    OnButtonFocused(this);
+                }
+            }else
+            {
+                if(OnButtonUnfocused!=null)
+                {
+                    OnButtonUnfocused(this);
+                }
+            }
         }
 
         private void OnClick(object sender, System.Windows.RoutedEventArgs e)

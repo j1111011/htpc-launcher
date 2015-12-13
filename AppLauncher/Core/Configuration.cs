@@ -88,7 +88,14 @@ namespace AppLauncher.Core
                 _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
             }
         }
-  
+        public void CreateConfiguration()
+        {
+            Configuration.Instance.AppButtons.Clear();
+            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 1", "", "", "", ""));
+            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 2", "", "", "", ""));
+            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 3", "", "", "", ""));
+            SaveConfiguration();
+        }
         public void SaveConfiguration()
         {
             string output = JsonConvert.SerializeObject(this, Formatting.Indented);
@@ -119,7 +126,7 @@ namespace AppLauncher.Core
                 }
             }else
             {
-                SaveConfiguration();
+                CreateConfiguration();
             }
         }
     }
