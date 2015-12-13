@@ -102,18 +102,29 @@ namespace AppLauncher
         {
             _activeButtonList.Clear();
             Grid_MainButtons.Children.Clear();
-             
-            foreach(var data in Configuration.Instance.AppButtons)
+
+            int maxItems = Configuration.Instance.MaxItemsPerRow * Configuration.Instance.MaxRows;
+            int count = 0;
+            foreach (var data in Configuration.Instance.AppButtons)
             {
+                if(count >= maxItems)
+                {
+                    break;
+                }
+
                 AppButton newBtn = new AppButton(data,this);
                 newBtn.OnButtonFocused += OnAppButtonFocused;
                 newBtn.OnButtonUnfocused += OnAppButtonUnfocused;
                 Grid_MainButtons.Children.Add(newBtn);
                 _activeButtonList.Add(newBtn);
+                count++;
             }
 
-            Grid_MainButtons.Columns = Math.Min(Configuration.Instance.AppButtons.Count, 6);
-            Grid_MainButtons.Rows    = Math.Min(Configuration.Instance.AppButtons.Count, Configuration.Instance.AppButtons.Count/6);
+            Grid_MainButtons.Columns = Math.Min(Configuration.Instance.AppButtons.Count, Configuration.Instance.MaxItemsPerRow);
+
+            int itemCount = Math.Min(maxItems, Configuration.Instance.AppButtons.Count);
+
+            Grid_MainButtons.Rows = (int)Math.Ceiling(itemCount / (float)Configuration.Instance.MaxItemsPerRow);
 
             FocusOnAppButtons();
         }

@@ -31,6 +31,8 @@ namespace AppLauncher.Core
         private string _configurationPath = null;
  
         private string _backgroundImagePath = null;
+        private int     _maxItemsPerRow = 6;
+        private int     _maxRows        = 3;
         private bool   _fullscreen = false;
         private List<AppButtonData> _appButtons = new List<AppButtonData>();
 
@@ -51,7 +53,6 @@ namespace AppLauncher.Core
                 _backgroundImagePath = value;
             }
         }
-
         public List<AppButtonData> AppButtons
         {
             get
@@ -75,6 +76,32 @@ namespace AppLauncher.Core
             set
             {
                 _fullscreen = value;
+            }
+        }
+
+        public int MaxItemsPerRow
+        {
+            get
+            {
+                return _maxItemsPerRow;
+            }
+
+            set
+            {
+                _maxItemsPerRow = value;
+            }
+        }
+
+        public int MaxRows
+        {
+            get
+            {
+                return _maxRows;
+            }
+
+            set
+            {
+                _maxRows = value;
             }
         }
         #endregion

@@ -46,6 +46,7 @@
                         <BitmapImage UriSource="Images/Fullscreen.png"/>
                     </Button>
                 </StackPanel>
+                <TextBlock x:Name="Text_App" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="White"></TextBlock>
             </Grid>
             <Grid x:Name="TabControl_Main" Margin="60,10,60,60" Grid.Row="1" Background="Transparent">
 
@@ -53,7 +54,6 @@
                 <!-- Main Page-->
                 <Grid x:Name="Grid_PageMain" >
                     <UniformGrid x:Name="Grid_MainButtons" Rows="1" Columns="1"/>
-                    <TextBlock x:Name="Text_App" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="White"></TextBlock>
                 </Grid>
 
        
