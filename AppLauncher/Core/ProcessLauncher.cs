@@ -25,7 +25,11 @@ namespace AppLauncher.Core
         }
         #endregion
 
+
         private Process _currentProcess = null;
+
+        public event Action OnProcessLaunched;
+        public event Action OnProcessExited;
 
         #region Get/Set
         public bool IsProcessLaunched
@@ -45,27 +49,49 @@ namespace AppLauncher.Core
         {
         }
 
+
+
         public void Launch(string launchPath,string workingDirectory,string parameters)
         {
             if(_currentProcess == null || _currentProcess.HasExited)
             {
-                Console.WriteLine("Launching " + launchPath);
+                try
+                {
+                    Console.WriteLine("Launching " + launchPath);
 
-                Process proc = new Process();
-                
-                proc.StartInfo.FileName = launchPath;
-                proc.StartInfo.WorkingDirectory = workingDirectory;
-                proc.StartInfo.Arguments = parameters;
-                proc.Exited += CurrentProcessExited;
-                proc.EnableRaisingEvents = true;
-                _currentProcess = proc;
-                proc.Start();
+                    Process proc = new Process();
+
+                    proc.StartInfo.FileName = launchPath;
+                    proc.StartInfo.WorkingDirectory = workingDirectory;
+                    proc.StartInfo.Arguments = parameters;
+                    proc.Exited += CurrentProcessExited;
+                    proc.EnableRaisingEvents = true;
+                    
+                    if(proc.Start())
+                    {
+                        _currentProcess = proc;
+                        if(OnProcessLaunched!=null)
+                        {
+                            OnProcessLaunched();
+                        }
+                    }
+
+                }catch(Exception e)
+                {
+                    //Failed to launch
+                }
+
             }
         }
 
         private void CurrentProcessExited(object sender, EventArgs e)
         {
+            if (OnProcessExited != null)
+            {
+                OnProcessExited();
+            }
             _currentProcess = null;
+
             Console.WriteLine("Current Process Exited");
         }
     }

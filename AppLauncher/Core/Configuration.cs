@@ -115,8 +115,11 @@ namespace AppLauncher.Core
                 }
                 catch(JsonException e)
                 {
-                    SaveConfiguration();
+                   // SaveConfiguration();
                 }
+            }else
+            {
+                SaveConfiguration();
             }
         }
     }

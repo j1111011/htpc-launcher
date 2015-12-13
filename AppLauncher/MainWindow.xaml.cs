@@ -85,19 +85,19 @@ namespace AppLauncher
             }
 
             ConfigPageButtons();
+            AppController.SendWindowBack(this);
         }
 
         private void OnDataLoaded()
         {
             if(Configuration.Instance.AppButtons.Count == 0)
             {
-                Configuration.Instance.AppButtons.Add(new AppButtonData("button", @"D:\Tools\Winscp\WinSCP.exe", @"D:\Tools\Winscp\", "", ""));
+                Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button", @"D:\Tools\Winscp\WinSsCP.exe", @"D:\Tools\Wisnscp\", "", ""));
             }
 
             SetFullscreen(Configuration.Instance.Fullscreen);
 
             UpdateAppButtons();
-            Configuration.Instance.SaveConfiguration();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace AppLauncher
              
             foreach(var data in Configuration.Instance.AppButtons)
             {
-                AppButton newBtn = new AppButton(data);
+                AppButton newBtn = new AppButton(data,this);
                 Grid_MainButtons.Children.Add(newBtn);
                 _activeButtonList.Add(newBtn);
             }
@@ -201,8 +201,6 @@ namespace AppLauncher
         private void ButtonFullscreenOnClick(object sender, RoutedEventArgs e)
         {
             Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
-            Configuration.Instance.SaveConfiguration();
-
             SetFullscreen(Configuration.Instance.Fullscreen);
         }
  
@@ -215,7 +213,6 @@ namespace AppLauncher
         public void ToggleFullscreen(Object sender, ExecutedRoutedEventArgs e)
         {
             Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
-            Configuration.Instance.SaveConfiguration();
 
             SetFullscreen(Configuration.Instance.Fullscreen);
         }

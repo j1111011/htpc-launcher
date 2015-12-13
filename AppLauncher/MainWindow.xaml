@@ -54,7 +54,7 @@
                 </Grid>
 
                 <!-- Exit Page-->
-                <Grid x:Name="Grid_PageExit">
+                <Grid x:Name="Grid_PageExit" Visibility="Hidden">
 
                     <Grid MaxWidth="700" MaxHeight="350">
                         <Grid.RowDefinitions>
