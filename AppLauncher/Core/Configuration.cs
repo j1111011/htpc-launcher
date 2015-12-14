@@ -28,14 +28,14 @@ namespace AppLauncher.Core
         #endregion
 
         private const string ConfigurationFileName = "configuration.cfg";
-        private string _configurationPath = null;
- 
-        private string _backgroundImagePath = null;
-        private int     _maxItemsPerRow = 6;
-        private int     _maxRows        = 3;
-        private bool   _fullscreen = false;
-        private List<AppButtonData> _appButtons = new List<AppButtonData>();
 
+        private string      _configurationPath = null;
+        private string      _backgroundImagePath = null;
+        private int         _maxItemsPerRow;
+        private int         _maxRows;
+        private bool        _fullscreen;
+
+        private List<AppButtonData> _appButtons = new List<AppButtonData>();
 
         public event Action OnDataSaved;
         public event Action OnDataLoaded;
@@ -53,6 +53,7 @@ namespace AppLauncher.Core
                 _backgroundImagePath = value;
             }
         }
+
         public List<AppButtonData> AppButtons
         {
             get
@@ -108,13 +109,17 @@ namespace AppLauncher.Core
 
         private Configuration()
         {
-            _configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
-            //Load config:
-            if (_backgroundImagePath == null)
-            {
-                _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
-            }
+            _configurationPath      = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
+            _maxItemsPerRow         = 6;
+            _maxRows                = 3;
+            _fullscreen             = true;
+            _backgroundImagePath    = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
+
         }
+
+        /// <summary>
+        /// Function to create a new config file. This is only called when there is no config file.
+        /// </summary>
         public void CreateConfiguration()
         {
             Configuration.Instance.AppButtons.Clear();
@@ -123,6 +128,10 @@ namespace AppLauncher.Core
             Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 3", "", "", "", ""));
             SaveConfiguration();
         }
+
+        /// <summary>
+        /// Function to save and overrite the configuration
+        /// </summary>
         public void SaveConfiguration()
         {
             string output = JsonConvert.SerializeObject(this, Formatting.Indented);

@@ -77,6 +77,9 @@ namespace AppLauncher
 
             Configuration.Instance.OnDataLoaded += OnDataLoaded;
 
+            ProcessLauncher.Instance.OnProcessLaunched += OnProcessLaunched;
+            ProcessLauncher.Instance.OnProcessExited += OnProcessExit;
+
             Configuration.Instance.LoadConfiguration();
 
             if (File.Exists(Configuration.Instance.BackgroundImagePath))
@@ -84,7 +87,6 @@ namespace AppLauncher
                 Image_Background.Source = new BitmapImage(new Uri(Configuration.Instance.BackgroundImagePath));
             }
 
-            ConfigPageButtons();
             AppController.SendWindowBack(this);
         }
 
@@ -96,7 +98,7 @@ namespace AppLauncher
         }
 
         /// <summary>
-        /// Function that updates all the main app buttons.
+        /// Function that updates all the main app buttons and arrange them.
         /// </summary>
         private void UpdateAppButtons()
         {
@@ -129,16 +131,38 @@ namespace AppLauncher
             FocusOnAppButtons();
         }
 
+        private void OnProcessLaunched()
+        {
+            ShowAlertMessage("Application Running");
+        }
+
+        private void OnProcessExit()
+        {
+            // This event can be called from another thread.
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(()=>
+            {
+                HideAlertMessage();
+            }));
+        }
+
+        /// <summary>
+        /// Function called when an app button is unfocused by keyboard.
+        /// </summary>
         private void OnAppButtonUnfocused(AppButton obj)
         {
             Text_App.Text = "";
         }
-
+        /// <summary>
+        /// Function called when an app button is focused by keyboard.
+        /// </summary>
         private void OnAppButtonFocused(AppButton appButton)
         {
             Text_App.Text = appButton.Data.Name;
         }
 
+        /// <summary>
+        /// Function to focus on the first app button of the applicacion. Is called with a distpacher to ensure is executed later.
+        /// </summary>
         private void FocusOnAppButtons()
         {
             if (_activeButtonList.Count > 0)
@@ -150,6 +174,9 @@ namespace AppLauncher
             }
         }
 
+        /// <summary>
+        /// Function called when the user enter to the exit selection menu
+        /// </summary>
         private void EnterExitPage()
         {
             // this.Stack_PageConfig.Visibility = Visibility.Visible;
@@ -157,12 +184,13 @@ namespace AppLauncher
             this.Grid_PageExit.Visibility = Visibility.Visible;
             _currentAppPage = EAppPage.Exit;
 
-            ConfigPageButtons();
-
             Keyboard.Focus(Button_Return);
 
         }
 
+        /// <summary>
+        /// Function called when the user leaves the exit selection menu
+        /// </summary>
         private void LeaveExitPage()
         {
             this.Grid_PageMain.Visibility = Visibility.Visible;
@@ -170,21 +198,29 @@ namespace AppLauncher
 
             _currentAppPage = EAppPage.Main;
 
-            ConfigPageButtons();
-
             FocusOnAppButtons();
         }
-        private void ConfigPageButtons()
+
+        /// <summary>
+        /// Function to hide the bottom-center message.
+        /// </summary>
+        private void HideAlertMessage()
         {
-            switch(_currentAppPage)
-            {
-                case EAppPage.Main:
-                    break;
-               case EAppPage.Exit:
-                    break;
-            }
+            Grid_Message.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Function to show and set the bottom-center message.
+        /// </summary>
+        private void ShowAlertMessage(String message)
+        {
+            Grid_Message.Visibility = Visibility.Visible;
+            Text_Alert.Text = message;
+        }
+
+        /// <summary>
+        /// Function to set the app in fullscreen Mode
+        /// </summary>
         private void SetFullscreen(bool fullscreen)
         {
             if(fullscreen)
@@ -201,7 +237,17 @@ namespace AppLauncher
             }
         }
 
-        #region HeaderButtonActions
+        /// <summary>
+        /// Function to toggle The fullscreen mode
+        /// </summary>
+        private void ToggleFullscreen()
+        {
+            Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
+            SetFullscreen(Configuration.Instance.Fullscreen);
+            FocusOnAppButtons();
+        }
+
+        #region Button Actions
 
         private void ButtonExitOnClick(object sender, RoutedEventArgs e)
         {
@@ -213,22 +259,12 @@ namespace AppLauncher
             {
                 LeaveExitPage();
             }
-            
-           // this.Close();
         }
-
 
         private void WindowOnMouseMove(object sender, MouseEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
             RestartMouseTimer();
-        }
-
-        private void ToggleFullscreen()
-        {
-            Configuration.Instance.Fullscreen = !Configuration.Instance.Fullscreen;
-            SetFullscreen(Configuration.Instance.Fullscreen);
-            FocusOnAppButtons();
         }
 
         private void ButtonFullscreenOnClick(object sender, RoutedEventArgs e)
@@ -263,8 +299,6 @@ namespace AppLauncher
             AppController.Shutdown();
         }
 
-        #endregion
-
         private void ExitbuttonsIsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Button button = sender as Button;
@@ -274,5 +308,7 @@ namespace AppLauncher
                 Text_ExitMain.Text = (string)button.Tag;
             }
         }
+
+        #endregion
     }
 }

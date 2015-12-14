@@ -25,7 +25,6 @@ namespace AppLauncher.Core
         }
         #endregion
 
-
         private Process _currentProcess = null;
 
         public event Action OnProcessLaunched;
@@ -48,8 +47,6 @@ namespace AppLauncher.Core
         private ProcessLauncher()
         {
         }
-
-
 
         public void Launch(string launchPath,string workingDirectory,string parameters)
         {

@@ -31,6 +31,17 @@
     <!-- WINDOWS -->
     <Grid>
         <Image Name="Image_Background" Stretch="UniformToFill"/>
+        
+        <!-- Message -->
+        <Grid x:Name="Grid_Message" Visibility = "Hidden">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Grid Width="250" Height="50" Margin="0,0,0,15">
+                    <Border  CornerRadius="15" Margin="5" BorderBrush="Transparent" Background="#FF5A9AE0">
+                        <TextBlock x:Name="Text_Alert" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White"> Running Application</TextBlock>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Grid>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -46,18 +57,18 @@
                         <BitmapImage UriSource="Images/Fullscreen.png"/>
                     </Button>
                 </StackPanel>
-                <TextBlock x:Name="Text_App" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="White"></TextBlock>
+                <TextBlock x:Name="Text_App" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" FontSize="30" FontWeight="Bold" Foreground="#88ffffff"></TextBlock>
             </Grid>
             <Grid x:Name="TabControl_Main" Margin="60,10,60,60" Grid.Row="1" Background="Transparent">
 
-             
+
                 <!-- Main Page-->
                 <Grid x:Name="Grid_PageMain" >
                     <UniformGrid x:Name="Grid_MainButtons" Rows="1" Columns="1"/>
                 </Grid>
 
-       
-                
+
+
                 <!-- Exit Page-->
                 <Grid x:Name="Grid_PageExit" Visibility="Hidden">
 
@@ -84,16 +95,6 @@
                         <TextBlock x:Name="Text_ExitMain" HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="White" Grid.Row="1"> TEXT</TextBlock>
                     </Grid>
                 </Grid>
-
-            </Grid>
-        </Grid>
-        <!-- Message -->
-        <Grid x:Name="Grid_Message" Visibility="Collapsed">
-            <Grid.Background>
-                <SolidColorBrush Opacity="0.5" Color="Black"/>
-            </Grid.Background>
-            <Grid Background="White" Width="600" Height="200">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="White"> LOADING</TextBlock>
             </Grid>
         </Grid>
     </Grid>
