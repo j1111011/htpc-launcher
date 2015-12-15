@@ -34,6 +34,7 @@ namespace AppLauncher.Core
         private int         _maxItemsPerRow;
         private int         _maxRows;
         private bool        _fullscreen;
+        private bool        _showAppText;
 
         private List<AppButtonData> _appButtons = new List<AppButtonData>();
 
@@ -79,7 +80,18 @@ namespace AppLauncher.Core
                 _fullscreen = value;
             }
         }
+        public bool ShowAppText
+        {
+            get
+            {
+                return _showAppText;
+            }
 
+            set
+            {
+                _showAppText = value;
+            }
+        }
         public int MaxItemsPerRow
         {
             get
@@ -105,6 +117,8 @@ namespace AppLauncher.Core
                 _maxRows = value;
             }
         }
+
+    
         #endregion
 
         private Configuration()
@@ -112,7 +126,7 @@ namespace AppLauncher.Core
             _configurationPath      = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
             _maxItemsPerRow         = 6;
             _maxRows                = 3;
-            _fullscreen             = true;
+            _fullscreen             = false;
             _backgroundImagePath    = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
 
         }

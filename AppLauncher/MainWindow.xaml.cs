@@ -206,7 +206,10 @@ namespace AppLauncher
         /// </summary>
         private void HideAlertMessage()
         {
-            Grid_Message.Visibility = Visibility.Hidden;
+            if (Configuration.Instance.ShowAppText)
+            {
+                Grid_Message.Visibility = Visibility.Hidden;
+            }
         }
 
         /// <summary>
@@ -214,8 +217,11 @@ namespace AppLauncher
         /// </summary>
         private void ShowAlertMessage(String message)
         {
-            Grid_Message.Visibility = Visibility.Visible;
-            Text_Alert.Text = message;
+            if (Configuration.Instance.ShowAppText)
+            {
+                Grid_Message.Visibility = Visibility.Visible;
+                Text_Alert.Text = message;
+            }
         }
 
         /// <summary>
