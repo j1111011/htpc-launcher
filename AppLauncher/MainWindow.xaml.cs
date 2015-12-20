@@ -10,6 +10,8 @@ using AppLauncher.Core;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace AppLauncher
 {
@@ -70,6 +72,10 @@ namespace AppLauncher
         /// </summary>
         private void SetupApplication()
         {
+            Timeline.DesiredFrameRateProperty.OverrideMetadata(
+            typeof(Timeline),new FrameworkPropertyMetadata { DefaultValue = Configuration.Instance.MaxFps }
+            );
+
             Mouse.OverrideCursor = Cursors.None;
             _mouseMoveTimer = new DispatcherTimer();
             _mouseMoveTimer.Tick += new EventHandler(MouseMoveTimerTick);

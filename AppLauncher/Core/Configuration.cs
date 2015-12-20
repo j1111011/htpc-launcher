@@ -33,6 +33,7 @@ namespace AppLauncher.Core
         private string      _backgroundImagePath = null;
         private int         _maxItemsPerRow;
         private int         _maxRows;
+        private int         _maxFps;
         private bool        _fullscreen;
         private bool        _showAppText;
 
@@ -118,7 +119,20 @@ namespace AppLauncher.Core
             }
         }
 
-    
+        public int MaxFps
+        {
+            get
+            {
+                return _maxFps;
+            }
+
+            set
+            {
+                _maxFps = value;
+            }
+        }
+
+
         #endregion
 
         private Configuration()
@@ -126,6 +140,7 @@ namespace AppLauncher.Core
             _configurationPath      = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
             _maxItemsPerRow         = 6;
             _maxRows                = 3;
+            _maxFps                 = 30;
             _fullscreen             = false;
             _backgroundImagePath    = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
 
