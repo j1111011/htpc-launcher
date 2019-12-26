@@ -28,16 +28,12 @@ namespace AppLauncher.Core
         #endregion
 
         private const string ConfigurationFileName = "configuration.cfg";
-
-        private string      _configurationPath = null;
-        private string      _backgroundImagePath = null;
-        private int         _maxItemsPerRow;
-        private int         _maxRows;
-        private int         _maxFps;
-        private bool        _fullscreen;
-        private bool        _showAppText;
-
+        private string _configurationPath = null;
+ 
+        private string _backgroundImagePath = null;
+        private bool   _fullscreen = false;
         private List<AppButtonData> _appButtons = new List<AppButtonData>();
+
 
         public event Action OnDataSaved;
         public event Action OnDataLoaded;
@@ -81,86 +77,18 @@ namespace AppLauncher.Core
                 _fullscreen = value;
             }
         }
-        public bool ShowAppText
-        {
-            get
-            {
-                return _showAppText;
-            }
-
-            set
-            {
-                _showAppText = value;
-            }
-        }
-        public int MaxItemsPerRow
-        {
-            get
-            {
-                return _maxItemsPerRow;
-            }
-
-            set
-            {
-                _maxItemsPerRow = value;
-            }
-        }
-
-        public int MaxRows
-        {
-            get
-            {
-                return _maxRows;
-            }
-
-            set
-            {
-                _maxRows = value;
-            }
-        }
-
-        public int MaxFps
-        {
-            get
-            {
-                return _maxFps;
-            }
-
-            set
-            {
-                _maxFps = value;
-            }
-        }
-
-
         #endregion
 
         private Configuration()
         {
-            _configurationPath      = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
-            _maxItemsPerRow         = 6;
-            _maxRows                = 3;
-            _maxFps                 = 30;
-            _fullscreen             = false;
-            _backgroundImagePath    = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
-
+            _configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationFileName);
+            //Load config:
+            if (_backgroundImagePath == null)
+            {
+                _backgroundImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/wall-default.jpg");
+            }
         }
-
-        /// <summary>
-        /// Function to create a new config file. This is only called when there is no config file.
-        /// </summary>
-        public void CreateConfiguration()
-        {
-            Configuration.Instance.AppButtons.Clear();
-            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 1", "", "", "", ""));
-            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 2", "", "", "", ""));
-            Configuration.Instance.AppButtons.Add(new AppButtonData("Example Button 3", "", "", "", ""));
-            SaveConfiguration();
-        }
-
-        /// <summary>
-        /// Function to save and overrite the configuration
-        /// </summary>
+  
         public void SaveConfiguration()
         {
             string output = JsonConvert.SerializeObject(this, Formatting.Indented);
@@ -187,11 +115,8 @@ namespace AppLauncher.Core
                 }
                 catch(JsonException e)
                 {
-                   // SaveConfiguration();
+                    SaveConfiguration();
                 }
-            }else
-            {
-                CreateConfiguration();
             }
         }
     }
